@@ -36,7 +36,7 @@ class CatalogController
         return view('catalog.create');
     }
 
-    public function postCreate(Request $request)
+    public function store(Request $request)
     {
         //Validación
 
@@ -54,7 +54,12 @@ class CatalogController
         $movie->director = $request->input('director');
         $movie->poster = $request->input('poster');
         $movie->synopsis = $request->input('synopsis');
+        $movie->rented = false;
         $movie->save();
+
+        //return redirect()->route('catalog.index')->with('success', 'Película añadida correctamente.');
+        session()->flash('success', 'Película añadida correctamente.');
+
         return redirect()->route('catalog.index');
     }
 
@@ -65,14 +70,66 @@ class CatalogController
         //return view('catalog.edit', compact('movie', 'id'));
     }
 
-    public function rentConfirm()
+
+    public function rentConfirm($id)
     {
-        return view('catalog.rentConfirm');
+        $movie = Movie::findOrFail($id);
+        return view('catalog.rentConfirm', compact('movie'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'year' => 'required|integer|min:1900|max:2022',
+            'director' => 'required|max:255',
+            'poster' => 'required',
+            'synopsis' => 'required',
+        ]);
+
+        $movie = Movie::findOrFail($id);
+        $movie->title = $request->input('title');
+        $movie->year = $request->input('year');
+        $movie->director = $request->input('director');
+        $movie->poster = $request->input('poster');
+        $movie->synopsis = $request->input('synopsis');
+        $movie->save();
+
+        //return redirect()->route('catalog.show', $movie->id)->with('success', 'Película actualizada correctamente.');
+        session()->flash('success', 'Película actualizada correctamente.');
+
+        return redirect()->route('catalog.show', $movie->id);
     }
 
     public function rent($id)
     {
-        $movie = Movie::changeState($id);
-        return view('catalog.rent', ['id' => $movie->id]);
+        $movie = Movie::findOrFail($id);
+        $movie->rented = true;
+        $movie->save();
+
+        session()->flash('success', 'La película ha sido alquilada correctamente.');
+
+        return redirect()->route('catalog.show', $id);
+    }
+
+    public function return($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->rented = false;
+        $movie->save();
+
+        session()->flash('success', 'La película ha sido devuelta correctamente.');
+
+        return redirect()->route('catalog.show', $id);
+    }
+
+    public function destroy($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->delete();
+
+        session()->flash('success', 'La película ha sido eliminada correctamente.');
+
+        return redirect()->route('catalog.index');
     }
 }

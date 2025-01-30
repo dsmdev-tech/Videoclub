@@ -8,32 +8,46 @@ use Illuminate\Support\Facades\Route;
 // Ruta para la página de inicio
 Route::get('/', [HomeController::class, 'home']);
 
-// Una ve haces login correctamente, te redirige a la página de welcome
-Route::get('/welcome', [CatalogController::class, 'home'])->name('welcome');
+Route::middleware(['auth'])->group(function () {
 
-// Ruta para mostrar todos los elementos
-Route::get('/catalog', [CatalogController::class, 'index'])->middleware('auth')->name('catalog');
+    // Una ve haces login correctamente, te redirige a la página de welcome
+    Route::get('/welcome', [CatalogController::class, 'home'])->name('welcome');
 
-// Ruta para mostrar un elemento específico
-Route::get('/catalog/show/{id}', [CatalogController::class, 'show'])->name('catalog.show');
+    // Ruta para mostrar todos los elementos
+    Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
 
-// Ruta para crear un nuevo elemento
-Route::get('/catalog/create', [CatalogController::class, 'create'])->name('catalog.create');
+    // Ruta para mostrar un elemento específico
+    Route::get('/catalog/show/{id}', [CatalogController::class, 'show'])->name('catalog.show');
 
-// Ruta para editar un elemento
-Route::get('/catalog/edit/{id}', [CatalogController::class, 'edit'])->name('catalog.edit');
+    // Ruta para crear un nuevo elemento
+    Route::get('/catalog/create', [CatalogController::class, 'create'])->name('catalog.create');
 
-// Ruta para guardar un nuevo elemento
-Route::post('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
+    // Ruta para editar un elemento
+    Route::get('/catalog/edit/{id}', [CatalogController::class, 'edit'])->name('catalog.edit');
 
-// Ruta para alquilar una película
-Route::post('/rent/{id}', [CatalogController::class, 'rent'])->name('catalog.rent');
+    // Ruta para confirmar el alquiler de una película
+    Route::get('/catalog/rentConfirm/{id}', [CatalogController::class, 'rentConfirm'])->name('catalog.rentConfirm');
 
-// Ruta para generar una pelicula
-Route::post('/catalog/create', [CatalogController::class, 'postCreate'])->name('catalog.postCreate');
+    //POST
 
-// Ruta para confirmar el alquiler de una película
-Route::get('/rentConfirm', [CatalogController::class, 'rentConfirm'])->name('catalog.rentConfirm');
+    // Ruta para guardar una película
+    Route::post('catalog/store',[CatalogController::class, 'store'])->name('catalog.store');
+
+    // Ruta para actualizar una película
+    Route::put('/catalog/update/{id}', [CatalogController::class, 'update'])->name('catalog.update');
+
+    // Ruta para alquilar una película
+    //Route::put('/rent/{id}', [CatalogController::class, 'rent'])->name('catalog.rent');
+    Route::post('/catalog/rent/{id}', [CatalogController::class, 'rent'])->name('catalog.rent');
+
+
+    // Ruta para devolver una película
+    Route::put('/catalog/return/{id}', [CatalogController::class, 'return'])->name('catalog.return');
+
+    // Ruta para eliminar una película
+    Route::delete('/catalog/delete/{id}', [CatalogController::class, 'destroy'])->name('catalog.destroy');
+
+});
 
 
 
