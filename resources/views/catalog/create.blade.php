@@ -66,7 +66,7 @@
                             <label for="synopsis" class="block text-sm font-medium text-white">Resumen</label>
                         </div>
                         <div class="mb-4 flex justify-center">
-                            <textarea id="synopsis" value="{{ old('synopsis')}}" name="synopsis" rows="4" class="text-black mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" ></textarea>
+                            <textarea id="synopsis" value="{{ old('synopsis')}}" name="synopsis" rows="4" class="text-black mt-1 block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" >{{ old('synopsis') }}</textarea>
                         </div>
 
                         @error('synopsis')

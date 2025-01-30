@@ -81,14 +81,15 @@
                                     Modificar Película
                                 </a>
                             </x-primary-button>
-
-                            <x-primary-button>
-                                <a href="{{ url('/catalog') }}">
-                                     Volver
-                                </a>
-                            </x-primary-button>
                         </div>
                     </form>
+                    <div class="pt-10 flex justify-center gap-6">
+                        <x-primary-button>
+                            <a href="{{ url('/catalog/show/' . $movie->id) }}">
+                                Volver
+                            </a>
+                        </x-primary-button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -31,13 +31,12 @@
                                     <p class="pt-8 pb-6 w-full"><strong>Estado:</strong> Película actualmente alquilada</p>
 
                                     <!-- Botón Devolver -->
-                                    <form action="{{ route('catalog.return', $movie->title) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
                                         <x-primary-button class="dark:bg-red-700 dark:text-white h-11">
-                                            Devolver
+                                            <a href="{{ url('/catalog/returnConfirm/' . $movie->id) }}" class="w-full h-full flex items-center justify-center">
+                                                Devolver
+                                            </a>
                                         </x-primary-button>
-                                    </form>
+
                                 @else
                                     <p class="pt-8 pb-6 w-full pl-6"><strong>Estado:</strong> Película disponible</p>
 
@@ -57,13 +56,11 @@
                                 </x-primary-button>
 
                                 <!-- Botón Eliminar -->
-                                <form action="{{ route('catalog.destroy', $movie->id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar esta película?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <x-primary-button class="dark:bg-red-500 dark:text-white h-11">
+                                <x-primary-button class="dark:bg-red-500 dark:text-white h-11">
+                                    <a href="{{ route('catalog.deleteConfirm', $movie->id) }}">
                                         Eliminar
-                                    </x-primary-button>
-                                </form>
+                                    </a>
+                                </x-primary-button>
 
                                 <!-- Botón Volver al listado -->
                                 <x-primary-button class="h-11">
@@ -80,11 +77,4 @@
     </div>
 </x-app-layout>
 
-{{--<!-- Botón Alquilar -->
-<form action="{{ route('catalog.rent', $movie->id) }}" method="POST">
-    @csrf
-    @method('PUT')
-    <x-primary-button class="dark:bg-green-700 dark:text-white h-11">
-        Alquilar Película
-    </x-primary-button>
-</form>--}}
+

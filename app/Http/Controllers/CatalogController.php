@@ -77,6 +77,18 @@ class CatalogController
         return view('catalog.rentConfirm', compact('movie'));
     }
 
+    public function returnConfirm($id)
+    {
+        $movie = Movie::findOrFail($id);
+        return view('catalog.returnConfirm', compact('movie'));
+    }
+
+    public function deleteConfirm($id)
+    {
+        $movie = Movie::findOrFail($id);
+        return view('catalog.deleteConfirm', compact('movie'));
+    }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -94,6 +106,7 @@ class CatalogController
         $movie->poster = $request->input('poster');
         $movie->synopsis = $request->input('synopsis');
         $movie->save();
+
 
         //return redirect()->route('catalog.show', $movie->id)->with('success', 'Película actualizada correctamente.');
         session()->flash('success', 'Película actualizada correctamente.');

@@ -28,7 +28,14 @@ Route::middleware(['auth'])->group(function () {
     // Ruta para confirmar el alquiler de una película
     Route::get('/catalog/rentConfirm/{id}', [CatalogController::class, 'rentConfirm'])->name('catalog.rentConfirm');
 
-    //POST
+    // Ruta para confirmar la devolución de una película
+    Route::get('/catalog/returnConfirm/{id}', [CatalogController::class, 'returnConfirm'])->name('catalog.returnConfirm');
+
+    // Ruta para confirmar la eliminación de una película
+    Route::get('/catalog/deleteConfirm/{id}', [CatalogController::class, 'deleteConfirm'])->name('catalog.deleteConfirm');
+
+
+    //POST, PUT, DELETE
 
     // Ruta para guardar una película
     Route::post('catalog/store',[CatalogController::class, 'store'])->name('catalog.store');
@@ -38,8 +45,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Ruta para alquilar una película
     //Route::put('/rent/{id}', [CatalogController::class, 'rent'])->name('catalog.rent');
-    Route::post('/catalog/rent/{id}', [CatalogController::class, 'rent'])->name('catalog.rent');
-
+    Route::put('/catalog/rent/{id}', [CatalogController::class, 'rent'])->name('catalog.rent');
 
     // Ruta para devolver una película
     Route::put('/catalog/return/{id}', [CatalogController::class, 'return'])->name('catalog.return');
