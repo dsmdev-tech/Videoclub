@@ -24,7 +24,7 @@ Si quieres correr este proyecto en tu máquina, sigue estos pasos:
 
 1. **Clona el repositorio:**
    ```bash
-   git clone <url-del-repo>
+   git clone https://github.com/dsmdev-tech/Videoclub.git
    cd videoclub-laravel
    ```
 
